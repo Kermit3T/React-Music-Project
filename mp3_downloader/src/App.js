@@ -2,6 +2,8 @@ import './App.css';
 
 function App() {;
 
+  const title = 'Quick mp3 Downloader'
+
   function getYouTubeMetadata(link, isPlaylist) {
     // Extract video ID or playlist ID from the link
     var idMatch = link.match(/[?&]v=([^&]+)/);
@@ -100,11 +102,12 @@ function App() {;
   return (
     <div className="App">
       <div className="about">
-        <h1>Quick Youtube Music Download</h1>
-        <p id="description"> QYMD is a service that let users download an mp3 file from a youtube video or playlist.</p>
+        <h1>{ title }</h1>
+        <p id="description"> This is a service that let users download an mp3 file from a youtube video or playlist.</p>
         <ol className ="instructions">
             <li> Copy the URL of a youtube video you want to convert to an mp3 file and put it in the input field below</li>
-            <li> Click Submit and check "Your submited video" to see if the video is correct </li>
+            <li> Make sure that the playlist/video is unlisted/public</li>
+            <li> Click "Submit" and check "download Preview" to see if the video is correct </li>
             <li> Edit the file name of your new Mp3</li>
             <li> Click "Download"</li>
         </ol>
@@ -136,19 +139,11 @@ function App() {;
         }}>Submit</button>
       </div>
 
-      <div className="response">
-        <h2> Your submited video </h2>
-        <h3>Input Debug:</h3>
-        <p id="isLink"></p>
-        <h3>Link Submitted:</h3>
-        <p id="linkDebug"></p>
-      </div>
-
       <div className="downloadPreview">
-        <h2> downloadPreview </h2>
+        <h2> Download Preview </h2>
 
         <div className="metadataDisplay">
-            <p>here is the download</p>
+            <p>Here is the what you will download</p>
         </div>
 
         <div className="filePreview">
@@ -156,7 +151,6 @@ function App() {;
         </div>
 
         <button id="confirmDownload">Download</button>
-
       </div>
 
     </div>
