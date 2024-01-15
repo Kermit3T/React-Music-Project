@@ -112,21 +112,24 @@ function App() {;
             <li> Click "Download"</li>
         </ol>
       </div>
+      
+      <div className="specifyLink">
+        <div className="linkFormat">
+          <h2>Link Format</h2>
+          <p> Choose with type your link is: </p>
+          <input type="checkbox" id="isPlaylist" name="isPlaylist"/>This is a playlist
+        </div>
 
-      <div className="linkFormat">
-        <h2>Link Format</h2>
-        <p> Choose with type your link is: </p>
-        <input type="checkbox" id="isPlaylist" name="isPlaylist"/>This is a playlist
+        <div className="platformSelection">
+          <h2>Platform Selection</h2>
+          <select id="platformSelector">
+              <option value="youtube">YouTube</option>
+              <option value="youtubemusic">YouTube Music</option>
+              <option value="soundcloud">SoundCloud</option>
+          </select>
+        </div>
       </div>
 
-      <div className="platformSelection">
-        <h2>Platform Selection</h2>
-        <select id="platformSelector">
-            <option value="youtube">YouTube</option>
-            <option value="youtubemusic">YouTube Music</option>
-            <option value="soundcloud">SoundCloud</option>
-        </select>
-      </div>
 
       <div className="Inputfield">
         <h2>Input Field</h2>
@@ -147,10 +150,8 @@ function App() {;
         </div>
 
         <div className="filePreview">
-            <input id="fileName" type="text" placeholder="Preview unavailable"/>
+            <input id="fileName" type="text" placeholder="Preview unavailable"/><button id="confirmDownload">Download</button>
         </div>
-
-        <button id="confirmDownload">Download</button>
       </div>
 
     </div>

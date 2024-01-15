@@ -1,10 +1,41 @@
 body {
+  width: 100vw;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
   background-color: #202020;
   font-size: 1em;
   font-family: Arial, Helvetica, sans-serif;
   color: #dadada;
+}
+
+.instructions {
+  padding-left: 10vw;
+  padding-right: 10vw;
+  text-align: left;
+  width: 40vw
+}
+
+.specifyLink {
+  padding-left: 10vw;
+  padding-right: 10vw;
+  width: 40vw;
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  justify-content: space-between;
+}
+
+#platformSelector {
+  border: 2px solid #da0000;
+  border-radius: .2em;
+  background-color: #353535;
+  height: 2.5em;
+  width: 10em;
+  font-size: 1em;
+  color: #dadada;
+  padding: 3px;
 }
 
 .inputField {
@@ -21,7 +52,7 @@ body {
   margin: 0;
   font-size: 15px;
   height: 2.5em;
-  width: 25vw;
+  width: 40vw;
   color: #dadada;
 }
 
@@ -37,17 +68,6 @@ body {
   color: #dadada;
 }
 
-#platformSelector {
-  border: 2px solid #da0000;
-  border-radius: .2em;
-  background-color: #353535;
-  height: 2.5em;
-  width: 10em;
-  font-size: 1em;
-  color: #dadada;
-  padding: 3px;
-}
-
 button {
   height: 2.5em;
   width: 7em;
@@ -60,7 +80,8 @@ button {
 }
 
 button:hover {
-  background-color: #757575;
+  border: 2px solid #da0000;
+  background-color: #979797;
   color: #000000;
 }
 
