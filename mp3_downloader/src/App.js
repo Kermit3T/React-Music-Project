@@ -1,14 +1,12 @@
 import './App.css';
 
-function App() {
-  console.log("THIS IS THE APIKEY",process.env.REACT_APP_YOUTUBE_KEY);
+function App() {;
 
   function getYouTubeMetadata(link, isPlaylist) {
     // Extract video ID or playlist ID from the link
     var idMatch = link.match(/[?&]v=([^&]+)/);
     var playlistMatch = link.match(/[?&]list=([^&]+)/);
     var apiKey = process.env.REACT_APP_YOUTUBE_KEY;
-    console.log(playlistMatch);
 
     if (idMatch || playlistMatch) {
         if (idMatch) {
@@ -31,12 +29,11 @@ function App() {
                     apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?playlistId=${playlistId}&part=snippet&key=${apiKey}`;
                     (async () => {
                         const playlistItems = await getPlaylistItems(playlistId, apiKey);
-                        
+    
                         if (playlistItems) {
-                            // Store playlist items in a variable
                             var playlistData = playlistItems;
                         } else {
-                            alert("playlist is not visable")
+                            alert("Your playlist is unavaliable or is set to private")
                             console.log('Failed to fetch playlist items.');
                         }
                         showMetadata(thumbnailUrl, title, channelName, isPlaylist, playlistData);
@@ -52,53 +49,54 @@ function App() {
             })
             .catch(error => console.error("Error fetching YouTube metadata:", error));
     }
-}
+  }
 
-async function getPlaylistItems(playlistId, apiKey) {
-    const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${apiKey}`;
-    
-    try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        
-        if (data.items) {
-            return data.items.map(item => item.snippet);
-        } else {
-            console.error('Error fetching playlist items:', data.error.message);
-            return null;
-        }
-    } catch (error) {
-        console.error('Error fetching playlist items:', error.message);
-        return null; 
-    }
-}
+  async function getPlaylistItems(playlistId, apiKey) {
+      const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${apiKey}`;
+      
+      try {
+          const response = await fetch(apiUrl);
+          const data = await response.json();
+          
+          if (data.items) {
+              return data.items.map(item => item.snippet);
+          } else {
+              console.error('Error fetching playlist items:', data.error.message);
+              return null;
+          }
+      } catch (error) {
+          console.error('Error fetching playlist items:', error.message);
+          return null; 
+      }
+  }
 
 // Function to display YouTube metadata in metadataDisplay div
-function showMetadata(thumbnailUrl, title, channelName, isPlaylist, playlistItems) {
-    var metadataDisplay = document.querySelector(".metadataDisplay");
-    var fileName = document.querySelector("#fileName")
+  function showMetadata(thumbnailUrl, title, channelName, isPlaylist, playlistItems) {
+      var metadataDisplay = document.querySelector(".metadataDisplay");
+      var fileName = document.querySelector("#fileName")
 
-    if (isPlaylist) {
-        var playlistHTML = "<ol>";
-        playlistItems.forEach(item => {
-            if (item.title !== "Deleted video" && item.description !== "This video is unavailable.") {
-                playlistHTML += `<li><input type="checkbox" checked>[${item.videoOwnerChannelTitle}] ${item.title}.mp3</input></li>`;
-            }
-        });
-        playlistHTML += "</ol>";
-        metadataDisplay.innerHTML = playlistHTML;
-        var namePreview = `[${channelName}] ${title}`
-        fileName.value = namePreview += ".zip";
-    } else {
-        var videoHTML = `
-        <img src="${thumbnailUrl}" alt="Thumbnail">
-        <p>${channelName} - ${title}</p>
-        `;
-        var namePreview = `[${channelName}] ${title}`
-        metadataDisplay.innerHTML = videoHTML;
-        fileName.value = namePreview += ".mp3";
-    } 
-}
+      if (isPlaylist) {
+          var playlistHTML = "<ol>";
+          playlistItems.forEach(item => {
+              if (item.title !== "Deleted video" && item.description !== "This video is unavailable.") {
+                  playlistHTML += `<li><input type="checkbox" checked>[${item.videoOwnerChannelTitle}] ${item.title}.mp3</input></li>`;
+              }
+          });
+          playlistHTML += "</ol>";
+          metadataDisplay.innerHTML = playlistHTML;
+          var namePreview = `[${channelName}] ${title}`
+          fileName.value = namePreview += ".zip";
+      } else {
+          var videoHTML = `
+          <img src="${thumbnailUrl}" alt="Thumbnail">
+          <p>${channelName} - ${title}</p>
+          `;
+          var namePreview = `[${channelName}] ${title}`
+          metadataDisplay.innerHTML = videoHTML;
+          fileName.value = namePreview += ".mp3";
+      } 
+  }
+
   return (
     <div className="App">
       <div className="about">
@@ -115,7 +113,7 @@ function showMetadata(thumbnailUrl, title, channelName, isPlaylist, playlistItem
       <div className="linkFormat">
         <h2>Link Format</h2>
         <p> Choose with type your link is: </p>
-        <input type="checkbox" id="isPlaylist" name="Playlist" />This is a playlist
+        <input type="checkbox" id="isPlaylist" name="isPlaylist"/>This is a playlist
       </div>
 
       <div className="platformSelection">
@@ -131,7 +129,11 @@ function showMetadata(thumbnailUrl, title, channelName, isPlaylist, playlistItem
         <h2>Input Field</h2>
         <p> Paste your link below: </p>
         <input id="inputLinks" type="text" placeholder="https://www.youtube.com/watch?v=..."/>
-        <button id="submitButton" onClick={()=>getYouTubeMetadata("https://www.youtube.com/playlist?list=PLDxn5-pMdljFSgLhdcmmmcsm9jXayz7Pf",true)}>Submit</button>
+        <button id="submitButton" onClick={()=>{
+          const inputLink = document.getElementById("inputLinks").value;
+          const isPlaylist = document.getElementById("isPlaylist").checked;
+          getYouTubeMetadata(inputLink, isPlaylist);
+        }}>Submit</button>
       </div>
 
       <div className="response">
