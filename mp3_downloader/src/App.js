@@ -1,12 +1,13 @@
 import './App.css';
-import 'dotenv/config'
 
 function App() {
+  console.log("THIS IS THE APIKEY",process.env.REACT_APP_YOUTUBE_KEY);
+
   function getYouTubeMetadata(link, isPlaylist) {
     // Extract video ID or playlist ID from the link
     var idMatch = link.match(/[?&]v=([^&]+)/);
     var playlistMatch = link.match(/[?&]list=([^&]+)/);
-    var apiKey = process.env.YOUTUBE_KEY;
+    var apiKey = process.env.REACT_APP_YOUTUBE_KEY;
     console.log(playlistMatch);
 
     if (idMatch || playlistMatch) {
