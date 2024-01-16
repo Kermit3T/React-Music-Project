@@ -1,4 +1,5 @@
 import './App.css';
+import React, { useState } from 'react';
 
 function App() {;
 
@@ -72,7 +73,7 @@ function App() {;
       }
   }
 
-// Function to display YouTube metadata in metadataDisplay div
+  // Function to display YouTube metadata in metadataDisplay div
   function showMetadata(thumbnailUrl, title, channelName, isPlaylist, playlistItems) {
       var metadataDisplay = document.querySelector(".metadataDisplay");
       var fileName = document.querySelector("#fileName")
@@ -97,6 +98,28 @@ function App() {;
           metadataDisplay.innerHTML = videoHTML;
           fileName.value = namePreview += ".mp3";
       } 
+  }
+
+  async function downloadMp3() {
+    const fileName = document.getElementById("fileName").value;
+    const inputLink = document.getElementById("inputLinks").value;
+
+    // Make a POST request to the server to initiate the download
+    const response = await fetch('http://localhost:8080/download', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ inputLink, fileName }),
+    });
+
+    if (response.ok) {
+      console.log('Download initiated successfully!');
+      // You can handle success (e.g., show a success message to the user)
+    } else {
+      console.error('Failed to initiate download:', response.statusText);
+      // Handle error (e.g., show an error message to the user)
+    }
   }
 
   return (
@@ -130,7 +153,6 @@ function App() {;
         </div>
       </div>
 
-
       <div className="Inputfield">
         <h2>Input Field</h2>
         <p> Paste your link below: </p>
@@ -150,8 +172,11 @@ function App() {;
         </div>
 
         <div className="filePreview">
-            <input id="fileName" type="text" placeholder="Preview unavailable"/><button id="confirmDownload">Download</button>
-        </div>
+        <input id="fileName" type="text" placeholder="Preview unavailable" />
+        <button id="confirmDownload" onClick={downloadMp3}>
+          Download
+        </button>
+      </div>
       </div>
 
     </div>
